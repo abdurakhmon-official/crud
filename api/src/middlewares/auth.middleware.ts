@@ -1,4 +1,4 @@
-import { USER_ROLE } from "@prisma/client"
+// import { USER_ROLE } from "@prisma/client"
 import { Context, Req } from "@tsed/common"
 import { useDecorators } from "@tsed/core"
 import { Forbidden, Unauthorized } from "@tsed/exceptions"
@@ -18,7 +18,7 @@ export class AuthMiddleware implements MiddlewareMethods {
             throw new Unauthorized("Unauthorized!")
         }
 
-        if (request.user.role === USER_ROLE.ADMIN) {
+        if (request.user.role === "ADMIN") {
             return true
         }
 
@@ -61,10 +61,10 @@ async function getUser(request:Request) {
 }
 
 type RoleRequirement = {
-    role: USER_ROLE
+    role: {ADMIN: any, USER: any, SUPER: any}
 }
 
-export function Authenticate(role: USER_ROLE = USER_ROLE.USER) {
+export function Authenticate(role = "USER") {
     return {role}
 }
 
